@@ -22,9 +22,9 @@ void putNumb();
 int chkCol(int numb,int row);
 // 验证某个格子是否允许放入某值
 bool chkNumb(int numb,int index);
-
+// 从九宫格中清除某个数字，当没空格放入数字的时候调用
 void cleanNumb(int numb);
-
+// 显示为九宫格
 void show();
 
 int main(){ 
@@ -56,20 +56,21 @@ void initGrids(){
 void putNumb(){
   int trycnt=10000;
   for(int i=0;i<81;i++){
+    if(trycnt--<=0){
+      break;
+    }
+	
     int tnumb=i/9+1;
     int trow=i%9;
     int tcol=chkCol(tnumb,trow);
-    // 没有任何符合的数据
+    // 没有任何符合的数据	
     if(tcol<0){
       cleanNumb(tnumb);
       if(tnumb>7){
         tnumb=7;
       }
       i=(tnumb-1)*9;
-      if(trycnt--<=0){
-        break;
-      }
-      
+            
       continue;
     }
     
@@ -77,23 +78,27 @@ void putNumb(){
   }
 }
 
+// 检查某个值在某行比较合适放入的列
 int chkCol(int numb,int row){
- int tcol=rand()%9;
- bool isok=false;
- 
- int cnt=9;
- while(!isok){
-   if(cnt<=0){
+  //随机生成一个列值
+  int tcol=rand()%9;
+  // 初始化列值ok的状态标记
+  bool isok=false;
+  // 准备判断9次试试这一行到底哪个位置合适
+  int cnt=9;
+  while(!isok){
+   if(cnt--<=0){
      break;
    }
+   tcol%=9;
+   // 如果该列已经放入数字了
    if(grids[row*9+tcol].numb_v!=0){
-     tcol=(tcol+1)%9;
-     cnt--;
+     tcol++;
      continue;
    }
+   // 如果该列不太合适放入numb,即行列宫中已经存在numb了
    if(!chkNumb(numb,row*9+tcol)){
-     tcol=(tcol+1)%9;
-     cnt--;
+     tcol++;
      continue;
    }
    return tcol;    
@@ -101,7 +106,7 @@ int chkCol(int numb,int row){
  
  return -1;
 }
-
+// 验证某格是否可以放入某numb
 bool chkNumb(int numb,int index){
   if(grids[index].numb_v!=0){
     return false;
@@ -123,14 +128,13 @@ bool chkNumb(int numb,int index){
 
 void cleanNumb(int numb){
   if(numb>7){
-    cleanNumb(numb-1);
+	  numb=7;
   }
   for(int i=0;i<81;i++){
-    if(grids[i].numb_v==numb){
+    if(grids[i].numb_v>=numb){
       grids[i].numb_v=0;
     }
   }
-
 }
 
 
