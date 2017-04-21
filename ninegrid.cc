@@ -56,7 +56,7 @@ void initGrids(){
 void putNumb(){
   int trycnt=10000;
   for(int i=0;i<81;i++){
-    if(trycnt--<=0){
+    if(trycnt--<=0&&i+9>81){
       break;
     }
 	
