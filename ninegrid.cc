@@ -69,7 +69,7 @@ void putNumb(){
       if(tnumb>7){
         tnumb=7;
       }
-      i=(tnumb-1)*9;
+      i=(tnumb-1)*9-1;
             
       continue;
     }
