@@ -1,5 +1,5 @@
 
-#define DEBUG 
+//#define DEBUG 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,7 +56,7 @@ void initGrids(){
 void putNumb(){
   int trycnt=10000;
   for(int i=0;i<81;i++){
-    if(trycnt--<=0&&i+9>81){
+    if(trycnt--<=0){
       break;
     }
 	
@@ -140,7 +140,13 @@ void cleanNumb(int numb){
 
 void show(){
   for(int i=0;i<81;i++){
-    printf("  %d",grids[i].numb_v);
+    if(grids[i].grid_v%2==0){
+      printf("  \033[40;32m%d\033[0m",grids[i].numb_v);
+    }else{
+      printf("  \033[40;37m%d\033[0m",grids[i].numb_v);
+    }    
+
+
     if(i%9==8){
       printf("\n");
     } 
