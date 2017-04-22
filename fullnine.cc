@@ -50,10 +50,11 @@ void fullnine::putNumb(){
     int tcol=chkCol(tnumb,trow);
     // 没有任何符合的数据	
     if(tcol<0){
-      cleanNumb(tnumb);
-      if(tnumb>7){
-        tnumb=7;
+      if(tnumb>8){
+        tnumb=8;
       }
+	  cleanNumb(tnumb);
+	  
       i=(tnumb-1)*9-1;
             
       continue;
@@ -94,8 +95,30 @@ bool fullnine::chkNumb(int numb,int index){
   if(grids[index].numb_v!=0){
     return false;
   }
+  
+  int trow=grids[index].row_v;
+  int tcol=grids[index].col_v;
+  int tgrid=grids[index].grid_v;
 
-  for(int i=0;i<81;i++){
+  for(int i=0;i<9;i++){
+    int row_index=trow*9+i;
+    if(row_index!=index&&grids[row_index].numb_v==null){
+	  return false;
+	}
+	
+	int col_index=i*9+tcol;
+	if(col_index!=index&&grids[col_index].numb_v==null){
+	  return false;
+	}
+    
+	int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
+	if(grid_index!=index&&grids[grid_index].numb_v==null){
+	  return false;
+	}
+    	
+  }
+  
+  /*for(int i=0;i<81;i++){
     if(grids[i].row_v==grids[index].row_v
       ||grids[i].col_v==grids[index].col_v
       ||grids[i].grid_v==grids[index].grid_v){
@@ -103,14 +126,11 @@ bool fullnine::chkNumb(int numb,int index){
         return false;
       }
     }
-  }
+  } */
   return true;
 }
 
 void fullnine::cleanNumb(int numb){
-  if(numb>7){
-	  numb=7;
-  }
   for(int i=0;i<81;i++){
     if(grids[i].numb_v>=numb){
       grids[i].numb_v=0;
