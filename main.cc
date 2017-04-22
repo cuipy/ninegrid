@@ -1,7 +1,7 @@
 
 //#define DEBUG 
 
-#include <sys/stat.h>
+
 
 #include "grid.h"
 #include "fullnine.h"
@@ -14,8 +14,7 @@ int main(){
 
   //fn.show();
   
-  mkdir("save",S_IRUSR|S_IWUSR);
-  savefile("save/file1.txt","HelloWorld\n");
+  shuduio::mkdir("save");
   
 
   return 0;

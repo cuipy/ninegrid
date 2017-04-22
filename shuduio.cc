@@ -1,16 +1,17 @@
 
 
 #include <stdio.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "shuduio.h"
 
-void savefile(char *filepath,char *str){
+void shudoio::mkdir(char *path){
   
-  FILE *fds=fopen(filepath,"aw+");
-  fwrite(str,strlen(str),1,fds);
-  
-  fclose(fds);
+  if(!access(path,0)){
+    mkdir(path,S_IRUSR|S_IWUSR);
+  }
 	
 }
 
