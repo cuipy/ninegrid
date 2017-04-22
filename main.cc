@@ -11,7 +11,7 @@ int main(){
   struct timeval start,end;
   gettimeofday(&start,NULL);
   fullnine fn;
-  int i=100000;
+  int i=1000000;
   while(i-->0){
   fn.run();
   if(fn.isok()){
@@ -23,8 +23,8 @@ int main(){
   }
   }
   gettimeofday(&end,NULL);
-
-  printf("耗时: %d\n",1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec);
+  int tt=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;
+  printf("耗时: %d\n",tt);
   return 0;
 }
 
