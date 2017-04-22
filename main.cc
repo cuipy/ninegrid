@@ -8,16 +8,19 @@
 #include "shuduio.h"
 
 int main(){ 
-
-  //fullnine fn;
-  //fn.run();
-
-  //fn.show();
-  
-  char *str=new char[100];
-  int len=shuduio::readLine("file1",2,str,100);
-  printf("%d  %s",len,str);
-  
+ 
+  fullnine fn;
+  int i=100000;
+  while(i-->0){
+  fn.run();
+  if(fn.isok()){
+    char *str=new char[100];
+    fn.tostring(str);
+   // shuduio::appendLine("file1",str);
+    printf("%s\n",str);
+    free(str);
+  }
+  }
   return 0;
 }
 

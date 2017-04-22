@@ -9,7 +9,7 @@
 #include "shuduio.h"
 
 int shuduio::readL1(char *filepath,char *str,int len){
-  readLine(filepath,0,str,len);
+  return readLine(filepath,0,str,len);
 }
 int shuduio::readLine(char *filepath,int line,char *str,int len){
   if(filepath==NULL||str==NULL){
@@ -24,9 +24,11 @@ int shuduio::readLine(char *filepath,int line,char *str,int len){
   fseek(fds,0,SEEK_SET);
   
   while(line-->=0){
-	if(feof(fds)){
-	  break;  
-	}
+    if(feof(fds)){
+      memset(str,0,sizeof(str));
+      len=0;    
+      break;  
+    }
     fgets(str,len,fds);
   }
   return strlen(str);

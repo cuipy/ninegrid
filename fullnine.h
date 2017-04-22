@@ -9,7 +9,7 @@
 class fullnine{
 private:	
   grid grids[81];
-
+  bool _isok;
 public:
   // structure  and destory 
   fullnine();
@@ -20,6 +20,9 @@ public:
   // 显示为九宫格
   void show();
   
+  bool isok();
+  
+  void tostring(char *str);
 private:
   // 向九宫格中循环放入0-8的数字
   void putNumb();

@@ -1,4 +1,6 @@
 
+#include <string.h>
+
 #include "grid.h"
 #include "fullnine.h"
 
@@ -11,6 +13,8 @@ fullnine::fullnine(){
     grids[i].grid_v=i%9/3+i/9/3*3;
     grids[i].numb_v=0;
   } 
+  srand((unsigned int)time(NULL));
+
 }
 
 fullnine::~fullnine(){
@@ -18,18 +22,26 @@ fullnine::~fullnine(){
 }
 
 void fullnine::run(){
-  srand((unsigned int)time(NULL));
   for(int i=0;i<81;i++){
     grids[i].numb_v=0;
   } 
-  
+  _isok=true; 
   putNumb();
 }
 
+void fullnine::tostring(char *str){
+  for(int i=0;i<81;i++){
+    str[i]=grids[i].numb_v+'0';
+  }
+}
+bool fullnine::isok(){
+  return _isok;
+}
 void fullnine::putNumb(){
-  int trycnt=10000;
+  int trycnt=200;
   for(int i=0;i<81;i++){
     if(trycnt--<=0){
+      _isok=false;
       break;
     }
 	
@@ -55,11 +67,9 @@ void fullnine::putNumb(){
 int fullnine::chkCol(int numb,int row){
   //随机生成一个列值
   int tcol=rand()%9;
-  // 初始化列值ok的状态标记
-  bool isok=false;
   // 准备判断9次试试这一行到底哪个位置合适
   int cnt=9;
-  while(!isok){
+  while(true){
    if(cnt--<=0){
      break;
    }
