@@ -8,8 +8,19 @@
 
 #include "shuduio.h"
 
-void shuduio::readL1(char *filepath){
-  	
+int shuduio::readL1(char *filepath,char *str,int len){
+  if(filepath==NULL||str==NULL){
+    return NULL;
+  }
+  
+  FILE* fds=fopen(filepath,"r");
+  if(fds==NULL){
+    return NULL;
+  }
+  
+  fseek(fds,0,SEEK_SET);
+
+  return fgets(str,len,fds);
 }
 
 
