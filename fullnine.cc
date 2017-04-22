@@ -1,5 +1,5 @@
 
-
+#include "grid.h"
 #include "fullnine.h"
 
 grid grids[81];

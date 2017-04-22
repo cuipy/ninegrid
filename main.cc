@@ -1,6 +1,7 @@
 
 //#define DEBUG 
 
+#include "grid.h"
 #include "fullnine.h"
 
 int main(){ 
