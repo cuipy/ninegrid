@@ -5,11 +5,9 @@
 #include "fullnine.h"
 
 int main(){ 
-  fullnine fn;
-  fn.srand((unsigned int)time(NULL));
 
-  fn.initGrids();
-  fn.putNumb();
+  fullnine fn;
+  fn.run();
 
   fn.show();
 #ifdef DEBUG 

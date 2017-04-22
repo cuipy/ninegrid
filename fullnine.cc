@@ -4,6 +4,7 @@
 
 
 fullnine::fullnine(){
+  
   for(int i=0;i<81;i++){
     grids[i].row_v=i/9;
     grids[i].col_v=i%9;
@@ -14,6 +15,15 @@ fullnine::fullnine(){
 
 fullnine::~fullnine(){
   
+}
+
+void fullnine::run(){
+  srand((unsigned int)time(NULL));
+  for(int i=0;i<81;i++){
+    grids[i].numb_v=0;
+  } 
+  
+  putNumb();
 }
 
 void fullnine::putNumb(){
@@ -105,8 +115,7 @@ void fullnine::show(){
       printf("  \033[40;32m%d\033[0m",grids[i].numb_v);
     }else{
       printf("  \033[40;37m%d\033[0m",grids[i].numb_v);
-    }    
-
+    }
 
     if(i%9==8){
       printf("\n");
