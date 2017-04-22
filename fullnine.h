@@ -1,4 +1,6 @@
 
+#ifndef __fullnine_h__
+#define __fullnine_h__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,3 +27,5 @@ bool chkNumb(int numb,int index);
 void cleanNumb(int numb);
 // 显示为九宫格
 void show();
+
+#endif __fullnine_h__
