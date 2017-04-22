@@ -12,16 +12,11 @@ int main(){
   gettimeofday(&start,NULL);
   
   fullnine fn;
-  int i=1000000;
-  while(i-->0){
-    fn.runF();
-    if(fn.isok()){
-      char *str=new char[100];
-      fn.strF(str);
-      shuduio::appendLine("file1",str);
-      //printf("%s\n",str);
-      free(str);
-  }
+ 
+  fn.runF();
+  if(fn.isok()){
+    fn.runK();
+	fn.showK();
   }
   gettimeofday(&end,NULL);
   int tt=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;

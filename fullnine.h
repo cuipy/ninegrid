@@ -18,8 +18,11 @@ public:
   void loadF(char *numbs);
   // 执行生成填满的九宫
   void runF();
+  // 置空处理
+  void runK();
   // 显示为九宫格
   void showF();
+  void showK();
   
   bool isok();
   
@@ -33,6 +36,8 @@ private:
   bool chkNumbF(int numb,int index);
   // 从九宫格中清除某个数字，当没空格放入数字的时候调用
   void cleanNumbF(int numb);
+  // 检查某个索引位置可否置空
+  bool chkIndexK(int index);
 
 
 private:

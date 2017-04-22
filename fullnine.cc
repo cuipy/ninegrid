@@ -12,6 +12,7 @@ fullnine::fullnine(){
     grids[i].col_v=i%9;
     grids[i].grid_v=i%9/3+i/9/3*3;
     grids[i].numb_v=0;
+	grids[i].numb_k=0;
   } 
   srand((unsigned int)time(NULL));
 
@@ -32,14 +33,14 @@ void fullnine::loadF(char *numbs){
       _isok=false;
       return;
     }
-    grids[i].row_v=i/9;
-    grids[i].col_v=i%9;
-    grids[i].grid_v=i%9/3+i/9/3*3;
-	grids[i].numb_v=numbs[i]-'1';
+	
+	grids[i].numb_v=numbs[i]-'0';
+	grids[i].numb_k=0;
   }
 
 }
 
+// 执行填充 完全解 的81个值
 void fullnine::runF(){
   for(int i=0;i<81;i++){
     grids[i].numb_v=0;
@@ -170,3 +171,57 @@ void fullnine::showF(){
 #endif
 
 }
+
+// 执行置空操作，最后形成考卷
+void fullnine::runK(){
+  int idx=rand()%81;
+  for(int i=0;i<81;i++){
+    grids[idx].numb_k=grids[idx].numb_v;
+  }
+  if(chkIndexK(idx)){
+    grids[idx].numb_k=0;
+  }
+}
+// 判断某个位置可否为空
+bool fullnine::chkIndexK(int index){
+  if(grids[index].numb
+  int n=511;
+  int n2=0;
+  
+  int trow=grids[index].row_v;
+  int tcol=grids[index].col_v;
+  int tgrid=grids[index].grid_v;
+
+  for(int i=0;i<9;i++){
+    int row_index=trow*9+i;
+    n2|=1<<(grids[row_index].numb_v-1);
+	int col_index=i*9+tcol;
+	n2|=1<<(grids[col_index].numb_v-1);
+    int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
+    n2|=1<<(grids[grid_index].numb_v-1);
+    if(n2==n){
+	  return true;
+	}
+  }
+  return false;
+}
+
+void fullnine::showK(){
+  for(int i=0;i<81;i++){
+	if(grids[i].numb_k==0){
+	  printf("  \033[47;32m \033[0m");
+      continue;	
+	}
+    if(grids[i].grid_v%2==0){
+      printf("  \033[40;32m%d\033[0m",grids[i].numb_k);
+    }else{
+      printf("  \033[40;37m%d\033[0m",grids[i].numb_k);
+    }
+
+    if(i%9==8){
+      printf("\n");
+    } 
+  }
+
+}
+
