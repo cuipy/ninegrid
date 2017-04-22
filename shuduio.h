@@ -5,7 +5,7 @@
 class shuduio{
 public:
   // 读取某行的的内容
-  static char* readLine(char *filepath,int line);
+  static int readLine(char *filepath,int line,char *str,int len);
 
   static int readL1(char *filepath,char *str,int len);
   

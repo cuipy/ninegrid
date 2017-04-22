@@ -15,7 +15,7 @@ int main(){
   //fn.show();
   
   char *str=new char[100];
-  int len=shuduio::readL1("file1",str,100);
+  int len=shuduio::readLine("file1",2,str,100);
   printf("%d  %s",len,str);
   
   return 0;
