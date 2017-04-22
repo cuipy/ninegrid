@@ -14,7 +14,7 @@ int main(){
 
   //fn.show();
   
-  shuduio::mkdir("save");
+  shuduio::appendLine("Hello World");
   
 
   return 0;
