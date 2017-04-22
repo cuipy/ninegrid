@@ -2,6 +2,8 @@
 
 #include "fullnine.h"
 
+grid grids[81];
+
 void initGrids(){
   for(int i=0;i<81;i++){
     grids[i].row_v=i/9;
@@ -69,8 +71,6 @@ bool chkNumb(int numb,int index){
   if(grids[index].numb_v!=0){
     return false;
   }
-  int trow=index/9;
-  int tcol=index%9;
 
   for(int i=0;i<81;i++){
     if(grids[i].row_v==grids[index].row_v

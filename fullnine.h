@@ -14,8 +14,6 @@ struct grid{
   int numb_v;
 };
 
-grid grids[81];
-
 void initGrids();
 // 向九宫格中循环放入0-8的数字
 void putNumb();
@@ -28,4 +26,4 @@ void cleanNumb(int numb);
 // 显示为九宫格
 void show();
 
-#endif __fullnine_h__
+#endif  // __fullnine_h__
