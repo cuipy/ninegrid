@@ -15,12 +15,12 @@ void shuduio::readL1(char *filepath){
 
 void shuduio::appendLine(char *filepath,char *str){
   if(filepath==NULL||str==NULL||strlen(str)==0){
-    return;
+    return -1;
   }
   
   FILE* fds=fopen(filepath,"aw+");
-  if(fds==null){
-    return;
+  if(fds==NULL){
+    return -1;
   }
   
   int len=strlen(str);
@@ -35,6 +35,7 @@ void shuduio::appendLine(char *filepath,char *str){
   fwrite(buf,len,1,fds);
   fclose(fds);
   delete []buf;
+  return len;
 }
 
 
