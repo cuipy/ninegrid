@@ -102,19 +102,19 @@ bool fullnine::chkNumb(int numb,int index){
 
   for(int i=0;i<9;i++){
     int row_index=trow*9+i;
-    if(row_index!=index&&grids[row_index].numb_v==null){
-	  return false;
-	}
+    if(row_index!=index&&grids[row_index].numb_v==numb){
+      return false;
+    }
 	
-	int col_index=i*9+tcol;
-	if(col_index!=index&&grids[col_index].numb_v==null){
-	  return false;
-	}
+    int col_index=i*9+tcol;
+    if(col_index!=index&&grids[col_index].numb_v==numb){
+      return false;
+    }
     
-	int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
-	if(grid_index!=index&&grids[grid_index].numb_v==null){
-	  return false;
-	}
+    int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
+    if(grid_index!=index&&grids[grid_index].numb_v==numb){
+      return false;
+    }
     	
   }
   
