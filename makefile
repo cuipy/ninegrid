@@ -1,13 +1,17 @@
 
+CScript:=g++ -c $< -o $@ -I.
+LinkScrpt:=g++ -o $@ $^ -I.
 
+HFiles:=$(wildcard *.h)
+CCFiles:=$(wildcard *.cc)
+ObjFiles:=$(CCFiles:%.cc=%.o)
 
-shudu:main.o fullnine.o
-	g++ -o shudu main.o fullnine.o -I.
+shudu:$(ObjFiles)
+	$(LinkScrpt)
 	
-main.o:main.cc fullnine.h
-	g++ -c main.cc fullnine.h -o main.o -I.
+$(CCFiles):%.cc $(HFiles)
+	$(CScript)
 	
-fullnine.o:fullnine.cc fullnine.h
-	g++ -c fullnine.h fullnine.cc -o fullnine.o -I.
+
 	
 
