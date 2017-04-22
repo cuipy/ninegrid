@@ -8,6 +8,11 @@
 
 #include "shuduio.h"
 
+void shuduio::readL1(char *filepath){
+  	
+}
+
+
 void shuduio::appendLine(char *filepath,char *str){
   if(filepath==NULL||str==NULL||strlen(str)==0){
     return;
