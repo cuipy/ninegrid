@@ -20,11 +20,12 @@ int shuduio::readL1(char *filepath,char *str,int len){
   
   fseek(fds,0,SEEK_SET);
 
-  return fgets(str,len,fds);
+  fgets(str,len,fds);
+  return strlen(str);
 }
 
 
-void shuduio::appendLine(char *filepath,char *str){
+int shuduio::appendLine(char *filepath,char *str){
   if(filepath==NULL||str==NULL||strlen(str)==0){
     return -1;
   }
