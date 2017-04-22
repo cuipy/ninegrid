@@ -5,12 +5,13 @@
 #include "fullnine.h"
 
 int main(){ 
-  srand((unsigned int)time(NULL));
+  fullnine fn;
+  fn.srand((unsigned int)time(NULL));
 
-  initGrids();
-  putNumb();
+  fn.initGrids();
+  fn.putNumb();
 
-  show();
+  fn.show();
 #ifdef DEBUG 
   for (int i=0;i<81;i++){
     printf("row:%d col:%d grid:%d numb:%d \n"

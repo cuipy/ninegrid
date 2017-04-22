@@ -2,9 +2,8 @@
 #include "grid.h"
 #include "fullnine.h"
 
-grid grids[81];
 
-void initGrids(){
+fullnine::fullnine(){
   for(int i=0;i<81;i++){
     grids[i].row_v=i/9;
     grids[i].col_v=i%9;
@@ -13,7 +12,11 @@ void initGrids(){
   } 
 }
 
-void putNumb(){
+fullnine::~fullnine(){
+  
+}
+
+void fullnine::putNumb(){
   int trycnt=10000;
   for(int i=0;i<81;i++){
     if(trycnt--<=0){
@@ -39,7 +42,7 @@ void putNumb(){
 }
 
 // 检查某个值在某行比较合适放入的列
-int chkCol(int numb,int row){
+int fullnine::chkCol(int numb,int row){
   //随机生成一个列值
   int tcol=rand()%9;
   // 初始化列值ok的状态标记
@@ -67,7 +70,7 @@ int chkCol(int numb,int row){
  return -1;
 }
 // 验证某格是否可以放入某numb
-bool chkNumb(int numb,int index){
+bool fullnine::chkNumb(int numb,int index){
   if(grids[index].numb_v!=0){
     return false;
   }
@@ -84,7 +87,7 @@ bool chkNumb(int numb,int index){
   return true;
 }
 
-void cleanNumb(int numb){
+void fullnine::cleanNumb(int numb){
   if(numb>7){
 	  numb=7;
   }
@@ -96,7 +99,7 @@ void cleanNumb(int numb){
 }
 
 
-void show(){
+void fullnine::show(){
   for(int i=0;i<81;i++){
     if(grids[i].grid_v%2==0){
       printf("  \033[40;32m%d\033[0m",grids[i].numb_v);
