@@ -1,17 +1,16 @@
 
-CScript:=g++ -c $< -o $@ -I.
-LinkScrpt:=g++ -o $@ $^ -I.
-
 HFiles:=$(wildcard *.h)
 CCFiles:=$(wildcard *.cc)
 ObjFiles:=$(CCFiles:%.cc=%.o)
 
 shudu:$(ObjFiles)
-	$(LinkScrpt)
+	g++ -o $@ $^ 
 	
-$(CCFiles):%.cc $(HFiles)
-	$(CScript)
+$(ObjFiles):%.o:%.cc $(HFiles)
+	g++ -Wall -O3 -D_REENTRANT -c $< -o $@
 	
-
+.PHONY:clean
+clean:
+	rm -f shudu $(ObjFiles)
 	
 
