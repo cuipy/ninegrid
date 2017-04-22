@@ -10,16 +10,17 @@
 int main(){ 
   struct timeval start,end;
   gettimeofday(&start,NULL);
+  
   fullnine fn;
   int i=1000000;
   while(i-->0){
-  fn.run();
-  if(fn.isok()){
-    char *str=new char[100];
-    fn.tostring(str);
-    shuduio::appendLine("file1",str);
-    //printf("%s\n",str);
-    free(str);
+    fn.runF();
+    if(fn.isok()){
+      char *str=new char[100];
+      fn.strF(str);
+      shuduio::appendLine("file1",str);
+      //printf("%s\n",str);
+      free(str);
   }
   }
   gettimeofday(&end,NULL);

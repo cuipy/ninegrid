@@ -9,6 +9,7 @@ struct grid{
   int col_v;
   int grid_v;
   int numb_v;
+  int numb2_v;
 };
 
 #endif  // __grid_h__

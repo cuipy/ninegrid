@@ -21,15 +21,34 @@ fullnine::~fullnine(){
   
 }
 
-void fullnine::run(){
+void fullnine::loadF(char *numbs){
+  
+  if(numbs==null||strlen(numbs)<81){
+    return;  
+  }
+  
+  for(int i=0;i<81;i++){
+	if(numbs[i]<'1'||numbs[i]>'9'){
+      _isok=false;
+      return;
+    }
+    grids[i].row_v=i/9;
+    grids[i].col_v=i%9;
+    grids[i].grid_v=i%9/3+i/9/3*3;
+	grids[i].numb_v=numbs[i]-'1';
+  }
+
+}
+
+void fullnine::runF(){
   for(int i=0;i<81;i++){
     grids[i].numb_v=0;
   } 
   _isok=true; 
-  putNumb();
+  putNumbF();
 }
 
-void fullnine::tostring(char *str){
+void fullnine::strF(char *str){
   for(int i=0;i<81;i++){
     str[i]=grids[i].numb_v+'0';
   }
@@ -37,7 +56,7 @@ void fullnine::tostring(char *str){
 bool fullnine::isok(){
   return _isok;
 }
-void fullnine::putNumb(){
+void fullnine::putNumbF(){
   int trycnt=200;
   for(int i=0;i<81;i++){
     if(trycnt--<=0){
@@ -47,7 +66,7 @@ void fullnine::putNumb(){
 	
     int tnumb=i/9+1;
     int trow=i%9;
-    int tcol=chkCol(tnumb,trow);
+    int tcol=chkColF(tnumb,trow);
     // 没有任何符合的数据	
     if(tcol<0){
       if(tnumb>8){
@@ -65,7 +84,7 @@ void fullnine::putNumb(){
 }
 
 // 检查某个值在某行比较合适放入的列
-int fullnine::chkCol(int numb,int row){
+int fullnine::chkColF(int numb,int row){
   //随机生成一个列值
   int tcol=rand()%9;
   // 准备判断9次试试这一行到底哪个位置合适
@@ -81,7 +100,7 @@ int fullnine::chkCol(int numb,int row){
      continue;
    }
    // 如果该列不太合适放入numb,即行列宫中已经存在numb了
-   if(!chkNumb(numb,row*9+tcol)){
+   if(!chkNumbF(numb,row*9+tcol)){
      tcol++;
      continue;
    }
@@ -91,7 +110,7 @@ int fullnine::chkCol(int numb,int row){
  return -1;
 }
 // 验证某格是否可以放入某numb
-bool fullnine::chkNumb(int numb,int index){
+bool fullnine::chkNumbF(int numb,int index){
   if(grids[index].numb_v!=0){
     return false;
   }
@@ -117,20 +136,11 @@ bool fullnine::chkNumb(int numb,int index){
     }
     	
   }
-  
-  /*for(int i=0;i<81;i++){
-    if(grids[i].row_v==grids[index].row_v
-      ||grids[i].col_v==grids[index].col_v
-      ||grids[i].grid_v==grids[index].grid_v){
-      if(grids[i].numb_v==numb){
-        return false;
-      }
-    }
-  } */
+
   return true;
 }
 
-void fullnine::cleanNumb(int numb){
+void fullnine::cleanNumbF(int numb){
   for(int i=0;i<81;i++){
     if(grids[i].numb_v>=numb){
       grids[i].numb_v=0;
@@ -139,7 +149,7 @@ void fullnine::cleanNumb(int numb){
 }
 
 
-void fullnine::show(){
+void fullnine::showF(){
   for(int i=0;i<81;i++){
     if(grids[i].grid_v%2==0){
       printf("  \033[40;32m%d\033[0m",grids[i].numb_v);
