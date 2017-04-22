@@ -2,12 +2,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "shuduio.h"
 
-void savefile(char *filePath,char *str){
+void savefile(char *filepath,char *str){
   
-  FILE *fds=fopen(filepath,"rw+");
-  fwrite(str,sizeof(*str),1,fds);
+  FILE *fds=fopen(filepath,"aw+");
+  fwrite(str,strlen(str),1,fds);
   
   fclose(fds);
 	

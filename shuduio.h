@@ -4,7 +4,7 @@
 
 #include "grid.h"
 
-static void savefile(char *filePath,char *str);
+void savefile(char *filePath,char *str);
 
 
 #endif  // __shuduio_h__
