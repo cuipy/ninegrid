@@ -23,7 +23,7 @@ fullnine::~fullnine(){
 
 void fullnine::loadF(char *numbs){
   
-  if(numbs==null||strlen(numbs)<81){
+  if(numbs==NULL||strlen(numbs)<81){
     return;  
   }
   
@@ -72,7 +72,7 @@ void fullnine::putNumbF(){
       if(tnumb>8){
         tnumb=8;
       }
-	  cleanNumb(tnumb);
+      cleanNumbF(tnumb);
 	  
       i=(tnumb-1)*9-1;
             
