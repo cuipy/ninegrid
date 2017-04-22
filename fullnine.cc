@@ -118,7 +118,6 @@ bool fullnine::chkNumbF(int numb,int index){
   
   int trow=grids[index].row_v;
   int tcol=grids[index].col_v;
-  int tgrid=grids[index].grid_v;
 
   for(int i=0;i<9;i++){
     int row_index=trow*9+i;
@@ -174,23 +173,28 @@ void fullnine::showF(){
 
 // 执行置空操作，最后形成考卷
 void fullnine::runK(){
-  int idx=rand()%81;
+  
   for(int i=0;i<81;i++){
-    grids[idx].numb_k=grids[idx].numb_v;
+    grids[i].numb_k=grids[i].numb_v;
   }
-  if(chkIndexK(idx)){
-    grids[idx].numb_k=0;
+
+  for(int i=0;i<81;i++){
+    int idx=rand()%81;
+    if(chkIndexK(idx)){
+      grids[idx].numb_k=0;
+    }
   }
 }
 // 判断某个位置可否为空
 bool fullnine::chkIndexK(int index){
-  if(grids[index].numb
+  if(grids[index].numb_k==0){
+    return false; 
+  }
   int n=511;
   int n2=0;
   
   int trow=grids[index].row_v;
   int tcol=grids[index].col_v;
-  int tgrid=grids[index].grid_v;
 
   for(int i=0;i<9;i++){
     int row_index=trow*9+i;
@@ -208,14 +212,18 @@ bool fullnine::chkIndexK(int index){
 
 void fullnine::showK(){
   for(int i=0;i<81;i++){
-	if(grids[i].numb_k==0){
-	  printf("  \033[47;32m \033[0m");
-      continue;	
-	}
     if(grids[i].grid_v%2==0){
-      printf("  \033[40;32m%d\033[0m",grids[i].numb_k);
+      if(grids[i].numb_k==0){
+        printf("  \033[40;32m_\033[0m");
+      }else{ 
+        printf("  \033[40;32m%d\033[0m",grids[i].numb_k);
+      }
     }else{
-      printf("  \033[40;37m%d\033[0m",grids[i].numb_k);
+      if(grids[i].numb_k==0){
+        printf("  \033[40;37m_\033[0m");
+      }else{
+        printf("  \033[40;37m%d\033[0m",grids[i].numb_k);
+      }
     }
 
     if(i%9==8){

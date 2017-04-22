@@ -12,11 +12,19 @@ int main(){
   gettimeofday(&start,NULL);
   
   fullnine fn;
- 
-  fn.runF();
-  if(fn.isok()){
+  
+  while(true){
+    fn.runF();
+    if(!fn.isok())
+      continue;
     fn.runK();
-	fn.showK();
+    
+ 
+    fn.showK();
+    printf("\n\n");
+
+    fn.showF();
+    break;
   }
   gettimeofday(&end,NULL);
   int tt=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;
