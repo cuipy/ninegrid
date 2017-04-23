@@ -38,7 +38,8 @@ private:
   void cleanNumbF(int numb);
   // 检查某个索引位置可否置空
   bool chkIndexK(int index);
-
+  
+  int randIndexK();
 
 private:
   

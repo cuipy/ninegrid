@@ -179,12 +179,21 @@ void fullnine::runK(){
   }
 
   for(int i=0;i<3*81;i++){
-    int idx=rand()%81;
+    int idx=randIndexK();
     if(chkIndexK(idx)){
       grids[idx].numb_k=0;
     }
   }
 }
+
+int fullnine::randIndexK(){
+  int idx=rand()%81;
+  while(grids[idx%81].numb_k==0){
+    idx++;
+  }
+  return idx%81;
+}
+
 // 判断某个位置可否为空
 bool fullnine::chkIndexK(int index){
   if(grids[index].numb_k==0){
