@@ -178,7 +178,7 @@ void fullnine::runK(){
     grids[i].numb_k=grids[i].numb_v;
   }
 
-  for(int i=0;i<81;i++){
+  for(int i=0;i<3*81;i++){
     int idx=rand()%81;
     if(chkIndexK(idx)){
       grids[idx].numb_k=0;
@@ -198,14 +198,19 @@ bool fullnine::chkIndexK(int index){
 
   for(int i=0;i<9;i++){
     int row_index=trow*9+i;
-    n2|=1<<(grids[row_index].numb_v-1);
-	int col_index=i*9+tcol;
-	n2|=1<<(grids[col_index].numb_v-1);
+    if(grids[row_index].numb_k!=0)
+      n2|=1<<(grids[row_index].numb_k-1);
+    
+    int col_index=i*9+tcol;
+    if(grids[col_index].numb_k!=0)
+      n2|=1<<(grids[col_index].numb_k-1);
+
     int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
-    n2|=1<<(grids[grid_index].numb_v-1);
+    if(grids[grid_index].numb_k!=0)
+      n2|=1<<(grids[grid_index].numb_k-1);
     if(n2==n){
-	  return true;
-	}
+      return true;
+    }
   }
   return false;
 }
