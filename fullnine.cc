@@ -206,33 +206,35 @@ bool fullnine::chkIndexK(int index){
   for(int i=0;i<9;i++){
 	// 宫内每格的索引
     int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3; 
-	if(grid_index==index||grids[grid_index].numb_k!=0){
-      continue;
+	if(chkIndexNumbF(grid_index,index,grids[index].numb_k)){
+	  return false;
 	}
 	
-	// 这一格是否允许放入与index格子中一样的值
-	bool canPut=true;
-	// 检查行是否允许填写该值
-	for(int ri=1;ri<=9;ri++){
-	  int rindex=grid_index/9+ri;
-	  if(rindex!=index&&grids[rindex].numb_k==grids[index].numb_v){
-	    canPut=false;
-	  }
-	}
-	// 检查列是否允许填写该值
-	for(int ci=0;ci<9;ci++){
-	  int cindex=ri*9+grid_index%9;
-	  if(cindex!=index&&grids[cindex].numb_k==grids[index].numb_v){
-	    canPut=false;
-	  }
-	}
-	// 如果允许放入，则不能唯一确定当前格子是否可以置空
-	if(canPut){
-      return false;
-	}
   }
   
-  
+  return true;
+}
+
+bool fullnine::chkIndexNumbF(int grid_index,int filterIndex,int numb){
+  // 比较的和过滤的单元格不能相同，如果已经有值，则肯定不允许
+  if(grid_index==filterIndex||grids[grid_index].numb_k!=0){
+    false;
+  }
+
+  // 检查行是否允许填写该值
+  for(int ri=1;ri<=9;ri++){
+    int rindex=grid_index/9+ri;
+    if(rindex!=filterIndex&&grids[rindex].numb_k==numb){
+	  return false;
+	}
+  }
+  // 检查列是否允许填写该值
+  for(int ci=0;ci<9;ci++){
+    int cindex=ri*9+grid_index%9;
+	if(cindex!=index&&grids[cindex].numb_k==grids[index].numb_v){
+	  return false;
+	}
+  }
   return true;
 }
 

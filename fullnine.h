@@ -38,6 +38,8 @@ private:
   void cleanNumbF(int numb);
   // 检查某个索引位置可否置空
   bool chkIndexK(int index);
+  // 检查某单元格是否允许放入某值，判断的时候不能以filterIndex做比较
+  bool chkIndexNumbF(int grid_index,int filterIndex,int numb);
   
   int randIndexK();
 
