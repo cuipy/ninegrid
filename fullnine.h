@@ -50,6 +50,10 @@ private:
   bool chkRowAreaNoNumb(int row_area,int filterIndex,int numb);
   // 检查某行区一定包含某数字
   bool chkRowAreaIncNumb(int row_area,int filterIndex,int numb);
+  // 检查某列区一定不包含某数字
+  bool chkColAreaNoNumb(int col_area,int filterIndex,int numb);
+  // 检查某列区一定包含某数字
+  bool chkColAreaIncNumb(int col_area,int filterIndex,int numb);
 
 };
 

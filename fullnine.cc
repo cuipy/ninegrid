@@ -267,6 +267,15 @@ bool fullnine::chkRowAreaIncNumb(int row_area,int filterIndex,int numb){
   
 }
 
+// 检查某列区一定不包含某数字
+bool fullnine::chkColAreaNoNumb(int col_area,int filterIndex,int numb){
+  
+}
+// 检查某列区一定包含某数字
+bool fullnine::chkColAreaIncNumb(int col_area,int filterIndex,int numb){
+  
+}
+
 // 检查某索引是否可以填入某值
 bool fullnine::chkIndexCanNumb(int grid_index,int filterIndex,int numb){
   // 比较的和过滤的单元格不能相同，如果已经有值，则肯定不允许
