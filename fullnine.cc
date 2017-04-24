@@ -180,9 +180,15 @@ void fullnine::runK(){
 
   for(int i=0;i<3*81;i++){
     int idx=randIndexK();
-    if(chkIndexK(idx)){
+    if(chk1IndexK(idx)){
       grids[idx].numb_k=0;
+	  continue;
     }
+	if(chk2IndexK(idx)){
+      grids[idx].numb_k=0;
+	  continue;
+    }
+	
   }
 }
 
@@ -195,7 +201,7 @@ int fullnine::randIndexK(){
 }
 
 // 判断某个位置可否为空
-bool fullnine::chkIndexK(int index){
+bool fullnine::chk1IndexK(int index){
   if(grids[index].numb_k==0){
     return false; 
   }
@@ -217,6 +223,35 @@ bool fullnine::chkIndexK(int index){
   }
   
   return true;
+}
+
+// 判断某个位置可否为空
+bool fullnine::chk2IndexK(int index){
+  if(grids[index].numb_k==0){
+    return false; 
+  }
+  int n2=0;
+  
+  int trow=grids[index].row_v;
+  int tcol=grids[index].col_v;
+
+  for(int i=0;i<9;i++){
+    int row_index=trow*9+i;
+    if(grids[row_index].numb_k!=0)
+      n2|=1<<(grids[row_index].numb_k-1);
+    
+    int col_index=i*9+tcol;
+    if(grids[col_index].numb_k!=0)
+      n2|=1<<(grids[col_index].numb_k-1);
+
+    int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
+    if(grids[grid_index].numb_k!=0)
+      n2|=1<<(grids[grid_index].numb_k-1);
+    if(n2==511){
+      return true;
+    }
+  }
+  return false;
 }
 
 bool fullnine::chkIndexNumbF(int grid_index,int filterIndex,int numb){
