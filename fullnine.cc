@@ -260,6 +260,14 @@ bool fullnine::chk2IndexK(int index){
 }
 // 检查某行区一定不包含某数字
 bool fullnine::chkRowAreaNoNumb(int row_area,int filterIndex,int numb){
+  // 所在区域第一个格子的行和列
+  int g1row=row_area/3;
+  int g1col=row_area%3;
+  int g1index=g1row*9+g1col;
+  // 三个格子都不为空，且都不等于numb，则返回numb
+  if(grids[g1index].numb_k!=0&&grids[g1index].numb_k!=numb&&grids[g1index+1].numb_k!=0&&grids[g1index+1].numb_k!=numb&&grids[g1index+2].numb_k!=0&&grids[g1index+2].numb_k!=numb){
+    return true;
+  }
   
 }
 // 检查某行区一定包含某数字
