@@ -199,29 +199,41 @@ bool fullnine::chkIndexK(int index){
   if(grids[index].numb_k==0){
     return false; 
   }
-  int n=511;
-  int n2=0;
   
   int trow=grids[index].row_v;
   int tcol=grids[index].col_v;
-
+  
   for(int i=0;i<9;i++){
-    int row_index=trow*9+i;
-    if(grids[row_index].numb_k!=0)
-      n2|=1<<(grids[row_index].numb_k-1);
-    
-    int col_index=i*9+tcol;
-    if(grids[col_index].numb_k!=0)
-      n2|=1<<(grids[col_index].numb_k-1);
-
-    int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
-    if(grids[grid_index].numb_k!=0)
-      n2|=1<<(grids[grid_index].numb_k-1);
-    if(n2==n){
-      return true;
-    }
+	// 宫内每格的索引
+    int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3; 
+	if(grid_index==index||grids[grid_index].numb_k!=0){
+      continue;
+	}
+	
+	// 这一格是否允许放入与index格子中一样的值
+	bool canPut=true;
+	// 检查行是否允许填写该值
+	for(int ri=1;ri<=9;ri++){
+	  int rindex=grid_index/9+ri;
+	  if(rindex!=index&&grids[rindex].numb_k==grids[index].numb_v){
+	    canPut=false;
+	  }
+	}
+	// 检查列是否允许填写该值
+	for(int ci=0;ci<9;ci++){
+	  int cindex=ri*9+grid_index%9;
+	  if(cindex!=index&&grids[cindex].numb_k==grids[index].numb_v){
+	    canPut=false;
+	  }
+	}
+	// 如果允许放入，则不能唯一确定当前格子是否可以置空
+	if(canPut){
+      return false;
+	}
   }
-  return false;
+  
+  
+  return true;
 }
 
 void fullnine::showK(){
