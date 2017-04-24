@@ -206,9 +206,13 @@ bool fullnine::chkIndexK(int index){
   for(int i=0;i<9;i++){
 	// 宫内每格的索引
     int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3; 
-	if(chkIndexNumbF(grid_index,index,grids[index].numb_k)){
-	  return false;
-	}
+    if(grid_index==index){
+      continue;
+    }
+
+    if(chkIndexNumbF(grid_index,index,grids[index].numb_k)){
+      return false;
+    }
 	
   }
   
@@ -222,18 +226,18 @@ bool fullnine::chkIndexNumbF(int grid_index,int filterIndex,int numb){
   }
 
   // 检查行是否允许填写该值
-  for(int ri=1;ri<=9;ri++){
-    int rindex=grid_index/9+ri;
+  for(int ri=0;ri<9;ri++){
+    int rindex=grid_index/9*9+ri;
     if(rindex!=filterIndex&&grids[rindex].numb_k==numb){
-	  return false;
-	}
+      return false;
+    }
   }
   // 检查列是否允许填写该值
   for(int ci=0;ci<9;ci++){
-    int cindex=ri*9+grid_index%9;
-	if(cindex!=index&&grids[cindex].numb_k==grids[index].numb_v){
-	  return false;
-	}
+    int cindex=ci*9+grid_index%9;
+    if(cindex!=filterIndex&&grids[cindex].numb_k==numb){
+      return false;
+    }
   }
   return true;
 }
