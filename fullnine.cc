@@ -11,6 +11,8 @@ fullnine::fullnine(){
     grids[i].row_v=i/9;
     grids[i].col_v=i%9;
     grids[i].grid_v=i%9/3+i/9/3*3;
+	grids[i].row_area=grids[i].row_v*3+grids[i].col_v/3;
+	grids[i].col_area=grids[i].col_v+grids[i].row_v/3;
     grids[i].numb_v=0;
 	grids[i].numb_k=0;
   } 
@@ -180,10 +182,12 @@ void fullnine::runK(){
 
   for(int i=0;i<3*81;i++){
     int idx=randIndexK();
+	
     if(chk1IndexK(idx)){
       grids[idx].numb_k=0;
 	  continue;
     }
+	
 	if(chk2IndexK(idx)){
       grids[idx].numb_k=0;
 	  continue;
@@ -209,6 +213,7 @@ bool fullnine::chk1IndexK(int index){
   int trow=grids[index].row_v;
   int tcol=grids[index].col_v;
   
+  // 检验当前宫的其他格，是否允许填入该值，如果都不允许，则一定当前格的值是唯一确定的
   for(int i=0;i<9;i++){
 	// 宫内每格的索引
     int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3; 
@@ -216,7 +221,7 @@ bool fullnine::chk1IndexK(int index){
       continue;
     }
 
-    if(chkIndexNumbF(grid_index,index,grids[index].numb_k)){
+    if(chkIndexCanNumb(grid_index,index,grids[index].numb_k)){
       return false;
     }
 	
@@ -253,8 +258,17 @@ bool fullnine::chk2IndexK(int index){
   }
   return false;
 }
+// 检查某行区一定不包含某数字
+bool fullnine::chkRowAreaNoNumb(int row_area,int filterIndex,int numb){
+  
+}
+// 检查某行区一定包含某数字
+bool fullnine::chkRowAreaIncNumb(int row_area,int filterIndex,int numb){
+  
+}
 
-bool fullnine::chkIndexNumbF(int grid_index,int filterIndex,int numb){
+// 检查某索引是否可以填入某值
+bool fullnine::chkIndexCanNumb(int grid_index,int filterIndex,int numb){
   // 比较的和过滤的单元格不能相同，如果已经有值，则肯定不允许
   if(grid_index==filterIndex||grids[grid_index].numb_k!=0){
     false;
@@ -263,14 +277,21 @@ bool fullnine::chkIndexNumbF(int grid_index,int filterIndex,int numb){
   // 检查行是否允许填写该值
   for(int ri=0;ri<9;ri++){
     int rindex=grid_index/9*9+ri;
-    if(rindex!=filterIndex&&grids[rindex].numb_k==numb){
+    // 如果是同一宫的，则跳过验证
+	if(grids[rindex].grid_v==grids[grid_index].grid_v){
+      continue;
+    }
+    if(grids[rindex].numb_k==numb){
       return false;
     }
   }
   // 检查列是否允许填写该值
   for(int ci=0;ci<9;ci++){
     int cindex=ci*9+grid_index%9;
-    if(cindex!=filterIndex&&grids[cindex].numb_k==numb){
+	if(grids[cindex].grid_v==grids[grid_index].grid_v){
+      continue;
+    }
+    if(grids[cindex].numb_k==numb){
       return false;
     }
   }

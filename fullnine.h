@@ -42,12 +42,14 @@ private:
   bool chk2IndexK(int index);
   
   // 检查某单元格是否允许放入某值，判断的时候不能以filterIndex做比较
-  bool chkIndexNumbF(int grid_index,int filterIndex,int numb);
+  bool chkIndexCanNumb(int grid_index,int filterIndex,int numb);
   
   int randIndexK();
-
-private:
   
+  // 检查某行区一定不包含某数字
+  bool chkRowAreaNoNumb(int row_area,int filterIndex,int numb);
+  // 检查某行区一定包含某数字
+  bool chkRowAreaIncNumb(int row_area,int filterIndex,int numb);
 
 };
 
