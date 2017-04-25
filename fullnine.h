@@ -45,10 +45,10 @@ private:
   bool chkIndexCanNumb(int grid_index,int filterIndex,int numb);
   //  检查某单元格一定是某值
   bool chkIndexIsNumb(int grid_index,int filterIndex,int numb);
-  bool chk1KIndexIsNumb(int grid_index,int filterIndex,int numb);
+  bool chk1KIndexIsNumb(int grid_index,int numb);
+  bool chk2KIndexIsNumb(int grid_index,int numb);
 
-
-  int randIndexK();
+  int randIndexNoZero();
   
   // 检查某行区一定不包含某数字
   bool chkRowAreaNoNumb(int row_area,int filterIndex,int numb);
