@@ -42,22 +42,22 @@ private:
   bool chk2IndexZeroK(int index);
   
   // 检查某单元格是否允许放入某值，判断的时候不能以filterIndex做比较
-  bool chkIndexCanNumb(int grid_index,int filterIndex,int numb);
+  bool chkIndexCanNumb(int grid_index,int numb);
   //  检查某单元格一定是某值
-  bool chkIndexIsNumb(int grid_index,int filterIndex,int numb);
+  bool chkIndexIsNumb(int grid_index,int numb);
   bool chk1KIndexIsNumb(int grid_index,int numb);
   bool chk2KIndexIsNumb(int grid_index,int numb);
 
   int randIndexNoZero();
   
   // 检查某行区一定不包含某数字
-  bool chkRowAreaNoNumb(int row_area,int filterIndex,int numb);
+  bool chkRowAreaNoNumb(int row_area,int numb);
   // 检查某行区一定包含某数字
-  bool chkRowAreaIncNumb(int row_area,int filterIndex,int numb);
+  bool chkRowAreaIncNumb(int row_area,int numb);
   // 检查某列区一定不包含某数字
-  bool chkColAreaNoNumb(int col_area,int filterIndex,int numb);
+  bool chkColAreaNoNumb(int col_area,int numb);
   // 检查某列区一定包含某数字
-  bool chkColAreaIncNumb(int col_area,int filterIndex,int numb);
+  bool chkColAreaIncNumb(int col_area,int numb);
 
 };
 

@@ -186,13 +186,13 @@ void fullnine::runK(){
 	if(tmpNumb==0){
       continue;
     }
-	grids[idx].numb_v=0;
+    grids[idx].numb_k=0;
 	
 	// 检查该单元格是否一定只能是某值
     if(chkIndexIsNumb(idx,tmpNumb)){
       continue;
     }
-	grids[idx].numb_v=tmpNumb;
+    grids[idx].numb_k=tmpNumb;
   }
 }
 
@@ -245,7 +245,7 @@ bool fullnine::chkIndexCanNumb(int grid_index,int numb){
     if(grids[rindex].numb_k==numb){
       return false;
     }
-    if(grids[rindex].numb_k==0&&chkKIndexIsNumb(rindex,numb)){
+    if(grids[rindex].numb_k==0&&chkIndexIsNumb(rindex,numb)){
       return false;
     }
   }
@@ -258,7 +258,7 @@ bool fullnine::chkIndexCanNumb(int grid_index,int numb){
     if(grids[cindex].numb_k==numb){
       return false;
     }
-    if(grids[cindex].numb_k==0&&chkKIndexIsNumb(cindex,numb)){
+    if(grids[cindex].numb_k==0&&chkIndexIsNumb(cindex,numb)){
       return false;
     }
 
@@ -268,7 +268,7 @@ bool fullnine::chkIndexCanNumb(int grid_index,int numb){
 
 // 验证某单元格的值一定是numb
 bool fullnine::chkIndexIsNumb(int grid_index,int numb){
-  if(grid_index==filterIndex||numb==0){
+  if(numb==0){
     return false;
   }
   // 非空情况
@@ -304,23 +304,23 @@ bool fullnine::chk1KIndexIsNumb(int grid_index,int numb){
       n2|=1<<(grids[col_index].numb_k-1);
 
     int g_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
-    if(grids[grid_index].numb_k!=0)
-      n2|=1<<(grids[grid_index].numb_k-1);
-  }
-  
-  if(n2&(1<<(numb-1)==1<<(numb-1)){
-    return false;
+    if(grids[g_index].numb_k!=0)
+      n2|=1<<(grids[g_index].numb_k-1);
   }
 
-  if(n2<511&&(n2|(1<<(numb-1)))==511){
+  int n3=1<<(numb-1);
+  if((n2&n3)==n3){
+    return false;
+  }
+  if((n2<511)&&((n2|n3)==511)){
     return true;
   }
   return false;
 }
 // 以第二种方式验证某空单元格一定是numb
 // 采用宫内除余法
-bool fullnine chk2KIndexIsNumb(int grid_index,int numb){
-  
+bool fullnine::chk2KIndexIsNumb(int grid_index,int numb){
+  return false;
 }
 
 void fullnine::showK(){
