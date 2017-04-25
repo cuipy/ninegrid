@@ -183,12 +183,11 @@ void fullnine::runK(){
   for(int i=0;i<3*81;i++){
     int idx=randIndexK();
 	
-    if(chk1IndexK(idx)){
+    if(chk1IndexZeroK(idx)){
       grids[idx].numb_k=0;
 	  continue;
     }
-	
-	if(chk2IndexK(idx)){
+    if(chk2IndexZeroK(idx)){
       grids[idx].numb_k=0;
 	  continue;
     }
@@ -204,8 +203,9 @@ int fullnine::randIndexK(){
   return idx%81;
 }
 
-// 判断某个位置可否为空
-bool fullnine::chk1IndexK(int index){
+// 判断某个位置可否为空,即该位置的值可唯一确定
+// 本方法按照宫内唯余法
+bool fullnine::chk1IndexZeroK(int index){
   if(grids[index].numb_k==0){
     return false; 
   }
@@ -215,7 +215,7 @@ bool fullnine::chk1IndexK(int index){
   
   // 检验当前宫的其他格，是否允许填入该值，如果都不允许，则一定当前格的值是唯一确定的
   for(int i=0;i<9;i++){
-	// 宫内每格的索引
+    // 宫内每格的索引
     int grid_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3; 
     if(grid_index==index){
       continue;
@@ -231,7 +231,7 @@ bool fullnine::chk1IndexK(int index){
 }
 
 // 判断某个位置可否为空
-bool fullnine::chk2IndexK(int index){
+bool fullnine::chk2IndexZeroK(int index){
   if(grids[index].numb_k==0){
     return false; 
   }
@@ -268,6 +268,15 @@ bool fullnine::chkRowAreaNoNumb(int row_area,int filterIndex,int numb){
   if(grids[g1index].numb_k!=0&&grids[g1index].numb_k!=numb&&grids[g1index+1].numb_k!=0&&grids[g1index+1].numb_k!=numb&&grids[g1index+2].numb_k!=0&&grids[g1index+2].numb_k!=numb){
     return true;
   }
+  for(int i=0;i<9;i++){
+    if(i%3==g1col){
+      continue;
+    }
+    // 验证如果行上有一个其他单元格一定是numb，则返回true
+    if(chkIndexIsNumb(g1row*9+i,filterIndex,numb)){
+      return true;
+    }
+  } 
   
 }
 // 检查某行区一定包含某数字
@@ -287,32 +296,91 @@ bool fullnine::chkColAreaIncNumb(int col_area,int filterIndex,int numb){
 // 检查某索引是否可以填入某值
 bool fullnine::chkIndexCanNumb(int grid_index,int filterIndex,int numb){
   // 比较的和过滤的单元格不能相同，如果已经有值，则肯定不允许
-  if(grid_index==filterIndex||grids[grid_index].numb_k!=0){
-    false;
+  if(grid_index==filterIndex||numb==0){
+    return false;
+  }
+  if(grids[grid_index].numb_k==numb){
+    return true;
   }
 
   // 检查行是否允许填写该值
   for(int ri=0;ri<9;ri++){
     int rindex=grid_index/9*9+ri;
     // 如果是同一宫的，则跳过验证
-	if(grids[rindex].grid_v==grids[grid_index].grid_v){
+    if(grids[rindex].grid_v==grids[grid_index].grid_v){
       continue;
     }
     if(grids[rindex].numb_k==numb){
+      return false;
+    }
+    if(grids[rindex].numb_k==0&&chkKIndexIsNumb(rindex,filterIndex,numb)){
       return false;
     }
   }
   // 检查列是否允许填写该值
   for(int ci=0;ci<9;ci++){
     int cindex=ci*9+grid_index%9;
-	if(grids[cindex].grid_v==grids[grid_index].grid_v){
+    if(grids[cindex].grid_v==grids[grid_index].grid_v){
       continue;
     }
     if(grids[cindex].numb_k==numb){
       return false;
     }
+    if(grids[cindex].numb_k==0&&chkKIndexIsNumb(cindex,filterIndex,numb)){
+      return false;
+    }
+
   }
   return true;
+}
+
+// 验证某空单元格的值一定是numb
+bool fullnine::chkIndexIsNumb(int grid_index,int filterIndex,int numb){
+  if(grid_index==filterIndex||numb==0){
+    return false;
+  }
+  if(grids[grid_index].numb_k!=0){
+    return grids[grid_index].numb_k==numb;
+  }
+  
+  
+   
+}
+
+// 以第一种方法验证某空单元格一定是某个值
+bool fullnine::chk1KIndexIsNumb(int grid_index,int filterIndex,int numb){
+  
+  int trow=grid_index/9;
+  int tcol=grid_index%9;
+  int n2=0;
+
+  for(int i=0;i<9;i++){
+    int row_index=trow*9+i;
+    if(row_index!=grid_index&&grids[row_index].numb_k!=0)
+      n2|=1<<(grids[row_index].numb_k-1);
+
+    int col_index=i*9+tcol;
+    if(col_index!=grid_index&&grids[col_index].numb_k!=0)
+      n2|=1<<(grids[col_index].numb_k-1);
+
+    int g_index=(trow/3*3*9+tcol/3*3)+i/3*9+i%3;
+    if(g_index!=grid_index&&grids[grid_index].numb_k!=0)
+      n2|=1<<(grids[grid_index].numb_k-1);
+  }
+  
+  if(n2&(1<<(numb-1)==1<<(numb-1)){
+    return false;
+  }
+
+  if(n2<511&&(n2|(1<<(numb-1)))==511){
+    return true;
+  }
+  return false;
+}
+// 以第二种方式验证某空单元格一定是numb
+// 采用宫内除余法
+bool fullnine chk2KIndexIsNumb(int grid_index,int filterIndex,int numb){
+  
 }
 
 void fullnine::showK(){

@@ -37,13 +37,17 @@ private:
   // 从九宫格中清除某个数字，当没空格放入数字的时候调用
   void cleanNumbF(int numb);
   // 以第一种算法检查某个索引位置可否置空
-  bool chk1IndexK(int index);
+  bool chk1IndexZeroK(int index);
   // 以第二种算法检查某索引的位置可否置空
-  bool chk2IndexK(int index);
+  bool chk2IndexZeroK(int index);
   
   // 检查某单元格是否允许放入某值，判断的时候不能以filterIndex做比较
   bool chkIndexCanNumb(int grid_index,int filterIndex,int numb);
-  
+  //  检查某单元格一定是某值
+  bool chkIndexIsNumb(int grid_index,int filterIndex,int numb);
+  bool chk1KIndexIsNumb(int grid_index,int filterIndex,int numb);
+
+
   int randIndexK();
   
   // 检查某行区一定不包含某数字
