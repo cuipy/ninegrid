@@ -173,14 +173,14 @@ void fullnine::showF(){
 
 }
 
-// 执行置空操作，最后形成考卷
+// 执行置空操作，最后形成数独题
 void fullnine::runK(){
-  
+  // 将81个numb_k填满
   for(int i=0;i<81;i++){
     grids[i].numb_k=grids[i].numb_v;
   }
-
-  for(int i=0;i<3*81;i++){
+  // 循环两次尝试对所有的单元格置空
+  for(int i=0;i<2*81;i++){
     int idx=randIndexNoZero();
 	int tmpNumb=grids[idx].numb_v;
 	if(tmpNumb==0){
@@ -189,7 +189,7 @@ void fullnine::runK(){
     grids[idx].numb_k=0;
 	
 	// 检查该单元格是否一定只能是某值
-    if(chkIndexIsNumb(idx,tmpNumb)){
+    if(getIndexNumb(idx,0)==tmpNumb){
       continue;
     }
     grids[idx].numb_k=tmpNumb;
@@ -203,88 +203,6 @@ int fullnine::randIndexNoZero(){
     idx++;
   }
   return idx%81;
-}
-
-
-// 检查某行区一定不包含某数字
-bool fullnine::chkRowAreaNoNumb(int row_area,int numb){
-
-  
-}
-// 检查某行区一定包含某数字
-bool fullnine::chkRowAreaIncNumb(int row_area,int numb){
-  
-}
-
-// 检查某列区一定不包含某数字
-bool fullnine::chkColAreaNoNumb(int col_area,int numb){
-  
-}
-// 检查某列区一定包含某数字
-bool fullnine::chkColAreaIncNumb(int col_area,int numb){
-  
-}
-
-// 检查某索引是否可以填入某值,但不是绝对确定
-bool fullnine::chkIndexCanNumb(int grid_index,int numb){
-  // 比较的和过滤的单元格不能相同，如果已经有值，则肯定不允许
-  if(numb==0){
-    return false;
-  }
-  if(grids[grid_index].numb_k==numb){
-    return true;
-  }
-
-  // 检查行是否允许填写该值
-  for(int ri=0;ri<9;ri++){
-    int rindex=grid_index/9*9+ri;
-    // 如果是同一宫的，则跳过验证
-    if(grids[rindex].grid_v==grids[grid_index].grid_v){
-      continue;
-    }
-    if(grids[rindex].numb_k==numb){
-      return false;
-    }
-    if(grids[rindex].numb_k==0&&chkIndexIsNumb(rindex,numb)){
-      return false;
-    }
-  }
-  // 检查列是否允许填写该值
-  for(int ci=0;ci<9;ci++){
-    int cindex=ci*9+grid_index%9;
-    if(grids[cindex].grid_v==grids[grid_index].grid_v){
-      continue;
-    }
-    if(grids[cindex].numb_k==numb){
-      return false;
-    }
-    if(grids[cindex].numb_k==0&&chkIndexIsNumb(cindex,numb)){
-      return false;
-    }
-
-  }
-  return true;
-}
-
-// 验证某单元格的值一定是numb
-bool fullnine::chkIndexIsNumb(int grid_index,int numb){
-  if(numb==0){
-    return false;
-  }
-  // 非空情况
-  if(grids[grid_index].numb_k!=0){
-    return grids[grid_index].numb_k==numb;
-  }
-  
-  // 空单元格的情况
-  if(getIndexNumb(grid_index,0)>0){
-    return true;
-  }
-  //if(chk2KIndexIsNumb(grid_index,numb)){
-  //  return true;
-  //}
-  
-  return false;
 }
 
 // 以第一种方法验证某单元格的值
@@ -355,136 +273,7 @@ int fullnine::getIndexNumb(int grid_index,int deep){
     return -1;
   }
 }
-// 以第二种方式验证某空单元格一定是numb
-// 采用宫内除余法
-bool fullnine::chk2KIndexIsNumb(int grid_index,int numb){
-  // 验证同row的另外两个单元格不是numb，并验证同宫的其他两个区不存在numb
-  // 单元格所在行区
-  int cRowArea=grids[grid_index].row_area;
-  
-  bool rstate=true;
-  for(int i=cRowArea*3;i<cRowArea*3+3;i++){
-    if(i==grid_index){
-      continue;
-    }
-    if(grids[i].numb_k==numb){
-      return false;
-    }
-    if(!chkIndexNotNumb(i,numb,0)){
-      rstate=false;
-    } 
-  }
-  
-  // 两个行区数组
-  int tRowAreas[2];
-  sameGridRowArea(grid_index,tRowAreas);
-  
-  for(int i=0;i<2;i++){
-    if(!chkRowAreaNoNumb(tRowAreas[i],numb)){
-      rstate=false;
-    }
-  }
-  if(!rstate){
-    return false;
-  }
 
-
-  return true;
-}
-
-bool fullnine::chkIndexIsNumb(int grid_index,int numb,int deep){
-  if(deep>MAX_DEEP){
-    return false;
-  }
-  return chkIndexIsNumb(grid_index,numb,deep++);
-}
-
-// 检查某单元格的值一定不是numb
-bool fullnine::chkIndexNotNumb(int grid_index,int numb){
-  if(grids[grid_index].numb_k!=0){
-    return grids[grid_index].numb_k!=numb;
-  }
-  int rcgs[20];
-  sameRowColGrid(grid_index,rcgs);
-
-  for(int i=0;i<20;i++){
-    if(chkIndexIsNumb(rcgs[i],numb,0)){
-      return true;
-    }
-  }
-  return false;
-}
-bool fullnine::chkIndexNotNumb(int grid_index,int numb,int deep){
-  if(deep>MAX_DEEP){
-    return false;
-  }
-
-  return chkIndexNotNumb(grid_index,numb,deep++);
-}
-
-// 获得某一个单元格同行、同列、同宫的索引列表
-void fullnine::sameRowColGrid(int grid_index,int *rcgs){
-  int j=0;
-  for(int i=0;i<81;i++){
-    if(i==grid_index){
-      continue;
-    }
-    if(grids[i].row_v==grids[grid_index].row_v
-      ||grids[i].col_v==grids[grid_index].col_v
-      ||grids[i].grid_v==grids[grid_index].grid_v){
-      rcgs[j++]=i;
-    }
-
-  }  
-}
-
-// 获取同行区的其他两个单元格
-void fullnine::sameRowArea(int grid_index,int *gs){
-  int j=0;
-  for(int i=0;i<81;i++){
-    if(i==grid_index){
-      continue;
-    }
-    if(grids[i].row_area==grids[grid_index].row_area){
-      gs[j++]=i;
-    }
-  }
-}
-
-void fullnine::sameColArea(int grid_index,int *gs){
-  int j=0;
-  for(int i=0;i<81;i++){
-    if(i==grid_index){
-      continue;
-    }
-    if(grids[i].col_area==grids[grid_index].col_area){
-      gs[j++]=i;
-    }
-  }
-
-}
-
-void fullnine::sameGridRowArea(int grid_index,int *ras){
-  int j=0;
-  int grid=grids[grid_index].grid_v;
-  for(int i=0;i<3;i++){
-    int ngrid=grid*3+i;
-    if(ngrid==grid){
-      continue;
-    }
-    ras[j++]=ngrid;
-  }
-}
-void fullnine::sameGridColArea(int grid_index,int *cas){
-  int j=0;
-  int colArea=grids[grid_index].col_area/3*3;
-  for(int i=colArea;i<colArea+3;i++){
-    if(i==grids[grid_index].col_area){
-      continue;
-    }
-    cas[j++]=i;
-  }
-}
 
 void fullnine::showK(){
   for(int i=0;i<81;i++){

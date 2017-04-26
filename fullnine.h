@@ -45,33 +45,12 @@ private:
   
   // 检查某单元格是否允许放入某值，判断的时候不能以filterIndex做比较
   bool chkIndexCanNumb(int grid_index,int numb);
-  //  检查某单元格一定是某值
-  bool chkIndexIsNumb(int grid_index,int numb);
-  bool chkIndexIsNumb(int grid_index,int numb,int deep);
+
   int getIndexNumb(int grid_index,int deep);
-  bool chk2KIndexIsNumb(int grid_index,int numb);
+
 
   int randIndexNoZero();
   
-  // 检查某行区一定不包含某数字
-  bool chkRowAreaNoNumb(int row_area,int numb);
-  // 检查某行区一定包含某数字
-  bool chkRowAreaIncNumb(int row_area,int numb);
-  // 检查某列区一定不包含某数字
-  bool chkColAreaNoNumb(int col_area,int numb);
-  // 检查某列区一定包含某数字
-  bool chkColAreaIncNumb(int col_area,int numb);
-  
-  // 检查某单元格不可能是numb
-  bool chkIndexNotNumb(int grid_index,int numb);
-  bool chkIndexNotNumb(int grid_index,int numb,int deep);
-
-  //获得某个单元格同行、同列、同宫的20个单元格
-  void sameRowColGrid(int grid_index,int *rcgs);
-  void sameRowArea(int grid_index,int *gs);
-  void sameColArea(int grid_index,int *gs);
-  void sameGridRowArea(int grid_index,int *ras);
-  void sameGridColArea(int grid_index,int *cas);
 };
 
 #endif  // __fullnine_h__
