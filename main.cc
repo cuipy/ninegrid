@@ -2,6 +2,7 @@
 //#define DEBUG 
 
 #include <sys/time.h>
+#include <math.h>
 
 #include "grid.h"
 #include "fullnine.h"

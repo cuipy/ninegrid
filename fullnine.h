@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MAX_DEEP 1
+
 class fullnine{
 private:	
   grid grids[81];
@@ -45,7 +47,8 @@ private:
   bool chkIndexCanNumb(int grid_index,int numb);
   //  检查某单元格一定是某值
   bool chkIndexIsNumb(int grid_index,int numb);
-  bool chk1KIndexIsNumb(int grid_index,int numb);
+  bool chkIndexIsNumb(int grid_index,int numb,int deep);
+  int getIndexNumb(int grid_index,int deep);
   bool chk2KIndexIsNumb(int grid_index,int numb);
 
   int randIndexNoZero();
@@ -58,7 +61,17 @@ private:
   bool chkColAreaNoNumb(int col_area,int numb);
   // 检查某列区一定包含某数字
   bool chkColAreaIncNumb(int col_area,int numb);
+  
+  // 检查某单元格不可能是numb
+  bool chkIndexNotNumb(int grid_index,int numb);
+  bool chkIndexNotNumb(int grid_index,int numb,int deep);
 
+  //获得某个单元格同行、同列、同宫的20个单元格
+  void sameRowColGrid(int grid_index,int *rcgs);
+  void sameRowArea(int grid_index,int *gs);
+  void sameColArea(int grid_index,int *gs);
+  void sameGridRowArea(int grid_index,int *ras);
+  void sameGridColArea(int grid_index,int *cas);
 };
 
 #endif  // __fullnine_h__
