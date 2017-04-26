@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_DEEP 1
+#define MAX_DEEP 3
 
 class fullnine{
 private:	
